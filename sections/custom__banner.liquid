@@ -1,0 +1,31 @@
+{% style %}
+  CSS_rules
+{% endstyle %}
+
+<div id="Banner-{{ section.id }}" class="banner-container">
+  <div class="banner-image">
+    {{ section.settings.image | image_url: width: 4100 | image_tag }}
+  </div>
+  
+  <div class="banner-contnet"></div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner",
+  "class": "section-banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner"
+    }
+  ]
+}
+{% endschema %}
