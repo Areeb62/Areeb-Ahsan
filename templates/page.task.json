@@ -16,9 +16,20 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "custom_banner_ciLwFq": {
+      "type": "custom__banner",
+      "name": "Banner",
+      "settings": {
+        "announcement": "Announcement",
+        "button_url": "",
+        "button_text": "",
+        "media_caption": "Caption"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "custom_banner_ciLwFq"
   ]
 }
