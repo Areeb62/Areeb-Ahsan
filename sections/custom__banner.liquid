@@ -59,7 +59,11 @@
       {% endif %}
       {% if section.settings.button_text != blank %}
         <div class="banner-top--button">
-          {% render 'custom-button', url: section.settings.button_url, button_text: section.settings.button_text %}
+          {% render 'custom-button',
+            url: section.settings.button_url,
+            button_text: section.settings.button_text,
+            styletype: section.settings.button_style
+          %}
         </div>
       {% endif %}
     </div>
@@ -93,7 +97,8 @@
                   <div id="block--{{ block.type }}" class="button" {{ block.shopify_attributes }}>
                     {% render 'custom-button',
                       url: block.settings.button_url,
-                      button_text: block.settings.button_text
+                      button_text: block.settings.button_text,
+                      styletype: block.settings.button_style
                     %}
                   </div>
               {% endcase %}
@@ -172,6 +177,22 @@
           "type": "text",
           "id": "button_text",
           "label": "Button text"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "default": "primary",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "secondary",
+              "label": "Secondary"
+            }
+          ]
         }
       ]
     }
@@ -199,20 +220,20 @@
       "label": "Button text"
     },
     {
-        "type": "select",
-        "id": "button_style",
-        "label": "Button style",
-        "default": "primary",
-        "options": [
-            {
-                "value": "primary",
-                "label": "Primary"
-            },
-            {
-                "value": "secondary",
-                "label": "Secondary"
-            }
-        ]
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        }
+      ]
     },
     {
       "type": "inline_richtext",
