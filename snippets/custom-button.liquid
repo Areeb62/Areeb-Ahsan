@@ -1,3 +1,42 @@
+{% style %}
+    .custom__button {
+      display: inline-flex;
+      text-decoration: none;
+      color: inherit;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      text-transform: uppercase;
+      padding: 8px 32px;
+  }
+
+
+  .custom__button.custom__button-primary {
+      background: #FFF544;
+      font-weight: 600;
+  }
+
+    .custom__button.custom__button-secondary{
+      background: #000;
+      color: #fff;
+  }
+
+  .custom__button.custom__button-secondary:hover{
+      background: #FFF544;
+      color: #000;
+      transition: all 0.3s ease-out;
+  }
+
+  .custom__button.custom__button-secondary:hover .custom__button-arrow path {
+      fill: #000;
+       transition: all 0.3s ease-out;
+  }
+
+  .custom__button.custom__button-secondary .custom__button-arrow path {
+      fill: #fff;
+  }
+{% endstyle %}
+
 {% if type == 'button' %}
   <button class="custom__button custom__button-{{ styletype }}" type="{{ button_type | default: "button" }}">
     {{ button_text }}
