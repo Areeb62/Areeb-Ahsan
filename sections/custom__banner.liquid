@@ -2,12 +2,78 @@
   CSS_rules
 {% endstyle %}
 
+{% liquid
+  assign top_content = false
+  if section.settings.logo != blank or section.settings.announcement != blank or section.settings.button_text != blank
+    assign top_content = true
+  endif
+%}
+
 <div id="Banner-{{ section.id }}" class="banner-container">
-  <div class="banner-image">
-    {{ section.settings.image | image_url: width: 4100 | image_tag }}
-  </div>
-  
-  <div class="banner-contnet"></div>
+  {% if top_content %}
+    <div class="banner-top-content">
+      {% if section.settings.logo != blank %}
+        <div class="banner-top--logo">
+          {{ section.settings.logo | image_url: width: 150 | image_tag }}
+        </div>
+      {% endif %}
+      {% if section.settings.announcement != blank %}
+        <div class="banner-top--announcement">
+          <p>
+            {{ section.settings.announcement }}
+          </p>
+        </div>
+      {% endif %}
+      {% if section.settings.button_text != blank %}
+        <div class="banner-top--button">
+          {% render 'custom-button', url: section.settings.button_url, button_text: section.settings.button_text %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if section.settings.image != blank %}
+    <div class="banner-image">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 4100 | image_tag }}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag }}
+      {% endif %}
+      {% if section.blocks.size > 0 %}
+        <div class="banner-content">
+          {% for block in section.blocks %}
+            <article id="block--{{ block.type }}" class="block--{{ block.type }}">
+              <div class="preheading" {{ block.shopify_attributes }}>
+                <p>{{ block.settings.preheading }}</p>
+              </div>
+              <div class="heading" {{ block.shopify_attributes }}>
+                <h2>
+                  {{ block.settings.heading }}
+                </h2>
+              </div>
+              <div class="description" {{ block.shopify_attributes }}>
+                {{ block.settings.description }}
+              </div>
+              <div class="button" {{ block.shopify_attributes }}>
+                {% render 'custom-button',
+                  url: block.settings.button_url,
+                  button_text: block.settings.button_textF
+                %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if section.settings.media_caption != blank %}
+    <div class="banner-bottom-content">
+      <p>
+        {{ section.settings.media_caption }}
+      </p>
+    </div>
+  {% endif %}
 </div>
 
 {% schema %}
@@ -15,7 +81,96 @@
   "name": "Banner",
   "class": "section-banner",
   "tag": "section",
+  "blocks": [
+    {
+      "type": "preheading",
+      "name": "Preheading",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "preheading",
+          "label": "Preheading",
+          "default": "Preheading"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Title"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Text",
+          "default": "<p>Description</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button link"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        }
+      ]
+    }
+  ],
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "announcement",
+      "label": "Announcement text",
+      "default": "Announcement"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "media_caption",
+      "label": "Media caption",
+      "default": "Caption"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
     {
       "type": "image_picker",
       "id": "image",
