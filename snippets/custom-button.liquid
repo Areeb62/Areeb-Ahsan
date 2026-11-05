@@ -1,12 +1,12 @@
 {% if type == 'button' %}
-  <button class="custom__button" type="{{ button_type | default: "button" }}">
+  <button class="custom__button custom__button-{{ styletype }}" type="{{ button_type | default: "button" }}">
     {{ button_text }}
     <span class="custom__button-arrow">
       {{ 'Arrow 1.svg' | inline_asset_content }}
     </span>
   </button>
 {% else %}
-  <a class="custom__button" href="{{ url | default: '#' }}">
+  <a class="custom__button custom__button-{{ styletype }}" href="{{ url | default: '#' }}">
     {{ button_text }}
     <span class="custom__button-arrow">
       {{ 'Arrow 1.svg' | inline_asset_content }}
