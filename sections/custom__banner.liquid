@@ -1,5 +1,15 @@
 {% style %}
-  CSS_rules
+  #Banner-{{ section.id }} {
+    padding-top: {{ section.settings.spacing_top }}px;
+    padding-bottom: {{ section.settings.spacing_bottom }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+   #Banner-{{ section.id }} {
+        padding-top: {{ section.settings.spacing_top_mb }}px;
+        padding-bottom: {{ section.settings.spacing_bottom_mb }}px;
+    }
+  }
 {% endstyle %}
 
 {% liquid
@@ -174,6 +184,38 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Deskop spacing"
+    },
+    {
+      "type": "number",
+      "id": "spacing_top",
+      "label": "Spacing top (px)",
+      "default": 50
+    },
+    {
+      "type": "number",
+      "id": "spacing_bottom",
+      "label": "Spacing bottom (px)",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Mobile spacing"
+    },
+    {
+      "type": "number",
+      "id": "spacing_top_mb",
+      "label": "Spacing top (px)",
+      "default": 30
+    },
+    {
+      "type": "number",
+      "id": "spacing_bottom_mb",
+      "label": "Spacing bottom (px)",
+      "default": 30
     }
   ],
   "presets": [
