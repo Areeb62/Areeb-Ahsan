@@ -44,15 +44,11 @@
           <div id="block-{{ block.id }}" class="block--{{ block.type }}">
             {% case block.type %}
               {% when 'preheading' %}
-                <div id="block--{{ block.type }}" class="preheading" {{ block.shopify_attributes }}>
-                  <p>{{ block.settings.preheading }}</p>
-                </div>
+                <p class="preheading" {{ block.shopify_attributes }}>{{ block.settings.preheading }}</p>
               {% when 'heading' %}
-                <div id="block--{{ block.type }}" class="heading" {{ block.shopify_attributes }}>
-                  <h2>
-                    {{ block.settings.heading }}
-                  </h2>
-                </div>
+                <h2 class="heading" {{ block.shopify_attributes }}>
+                  {{ block.settings.heading }}
+                </h2>
 
               {% when 'description' %}
                 <div id="block--{{ block.type }}" class="description" {{ block.shopify_attributes }}>
@@ -61,7 +57,7 @@
 
               {% when 'button' %}
                 <div id="block--{{ block.type }}" class="button" {{ block.shopify_attributes }}>
-                  {% render 'custom-button', url: block.settings.button_url, button_text: block.settings.button_textF %}
+                  {% render 'custom-button', url: block.settings.button_url, button_text: block.settings.button_text %}
                 </div>
             {% endcase %}
           </div>
