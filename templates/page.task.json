@@ -36,7 +36,8 @@
           "type": "button",
           "settings": {
             "button_url": "#",
-            "button_text": "Shop now"
+            "button_text": "Shop now",
+            "button_style": "secondary"
           }
         }
       },
@@ -51,7 +52,12 @@
         "announcement": "Find the ideal gift for your loved ones.&nbsp;",
         "button_url": "#",
         "button_text": "Choose Gift",
-        "media_caption": "Caption"
+        "button_style": "primary",
+        "media_caption": "Caption",
+        "spacing_top": 50,
+        "spacing_bottom": 50,
+        "spacing_top_mb": 30,
+        "spacing_bottom_mb": 30
       }
     }
   },
