@@ -32,7 +32,6 @@
     </div>
   {% endif %}
 
-  {% if section.settings.image != blank %}
     <div class="banner-image">
       {% if section.settings.image != blank %}
         {{ section.settings.image | image_url: width: 4100 | image_tag }}
@@ -55,17 +54,13 @@
                 {{ block.settings.description }}
               </div>
               <div class="button" {{ block.shopify_attributes }}>
-                {% render 'custom-button',
-                  url: block.settings.button_url,
-                  button_text: block.settings.button_textF
-                %}
+                {% render 'custom-button', url: block.settings.button_url, button_text: block.settings.button_textF %}
               </div>
             </article>
           {% endfor %}
         </div>
       {% endif %}
     </div>
-  {% endif %}
 
   {% if section.settings.media_caption != blank %}
     <div class="banner-bottom-content">
