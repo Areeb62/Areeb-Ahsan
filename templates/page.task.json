@@ -23,7 +23,7 @@
         "heading_bdqhPX": {
           "type": "heading",
           "settings": {
-            "heading": "&nbsp;The Gift Guide&nbsp;"
+            "heading": "The Gift Guide&nbsp;"
           }
         },
         "description_dLFHbP": {
@@ -53,7 +53,7 @@
         "button_url": "#",
         "button_text": "Choose Gift",
         "button_style": "primary",
-        "media_caption": "Caption",
+        "media_caption": "<strong>SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL&nbsp;</strong>",
         "spacing_top": 50,
         "spacing_bottom": 50,
         "spacing_top_mb": 30,
