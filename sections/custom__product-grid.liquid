@@ -5,13 +5,16 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign heading_font = section.settings.heading_font
   assign body_font = section.settings.body_font
   assign body_font_light = body_font | font_modify: 'weight', '300'
 -%}
 
+{%- comment -%} Lustria is not in Shopify's font library, so it loads from Google Fonts {%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lustria&display=swap" rel="stylesheet">
+
 {% style %}
-  {{ heading_font | font_face: font_display: 'swap' }}
   {{ body_font | font_face: font_display: 'swap' }}
   {%- if body_font_light -%}
     {{ body_font_light | font_face: font_display: 'swap' }}
@@ -22,7 +25,7 @@
     --pg-white: #ffffff;
     --pg-label: #333333;
     --pg-hotspot-bg: rgba(248, 248, 248, 0.9);
-    --pg-heading-font: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --pg-heading-font: 'Lustria', Georgia, serif;
     --pg-body-font: {{ body_font.family }}, {{ body_font.fallback_families }};
 
     padding-top: {{ section.settings.spacing_top }}px;
@@ -879,12 +882,6 @@
     {
       "type": "header",
       "content": "Typography"
-    },
-    {
-      "type": "font_picker",
-      "id": "heading_font",
-      "label": "Heading & price font",
-      "default": "lustria_n4"
     },
     {
       "type": "font_picker",
