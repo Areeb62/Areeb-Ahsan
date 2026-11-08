@@ -1,0 +1,94 @@
+{% doc %}
+  Renders a product's options for the custom quick view.
+  Options with more than 2 values render as a dropdown, otherwise as radio buttons.
+  Radios are preselected from the first available variant; dropdowns start on a placeholder.
+
+  @param {product} product - The product whose options to render
+  @param {string} id_prefix - Unique prefix for input ids (use block.id)
+
+  @example
+  {% render 'custom-product-options', product: product, id_prefix: block.id %}
+{% enddoc %}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+
+{%- unless product.has_only_default_variant -%}
+  <div class="qv-options">
+    {%- for option in product.options_with_values -%}
+      {%- assign option_index = forloop.index0 -%}
+      {%- assign field_id = id_prefix | append: '-option-' | append: option.position -%}
+
+      {%- if option.values.size > 2 -%}
+        <div class="qv-option">
+          <label class="qv-option__label" for="{{ field_id }}">{{ option.name | escape }}</label>
+          <div class="qv-select">
+            <select
+              id="{{ field_id }}"
+              class="qv-select__input"
+              name="{{ field_id }}"
+              data-option-index="{{ option_index }}"
+            >
+              <option value="" selected disabled>Choose your {{ option.name | downcase | escape }}</option>
+              {%- for value in option.values -%}
+                <option value="{{ value | escape }}">{{ value | escape }}</option>
+              {%- endfor -%}
+            </select>
+            <span class="qv-select__arrow" aria-hidden="true">
+              <svg width="12" height="6" viewBox="0 0 12 6" fill="none" focusable="false">
+                <path d="M0.5 0.5L6 5.5L11.5 0.5" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      {%- else -%}
+        {%- liquid
+          assign option_name_lc = option.name | downcase
+          assign is_color = false
+          if option_name_lc == 'color' or option_name_lc == 'colour'
+            assign is_color = true
+          endif
+        -%}
+        <fieldset class="qv-option qv-option--radio">
+          <legend class="qv-option__label">{{ option.name | escape }}</legend>
+          <div class="qv-radios">
+            {%- for value in option.values -%}
+              {%- liquid
+                assign input_id = field_id | append: '-' | append: forloop.index
+                assign is_checked = false
+                if current_variant.options[option_index] == value
+                  assign is_checked = true
+                endif
+              -%}
+              <input
+                type="radio"
+                class="qv-radio__input"
+                id="{{ input_id }}"
+                name="{{ field_id }}"
+                value="{{ value | escape }}"
+                data-option-index="{{ option_index }}"
+                {% if is_checked %}
+                  checked
+                {% endif %}
+              >
+              <label class="qv-radio" for="{{ input_id }}">
+                {%- if is_color -%}
+                  {%- liquid
+                    if value.swatch.color
+                      assign swatch_color = value.swatch.color
+                    else
+                      assign swatch_color = value | handleize | remove: '-'
+                    endif
+                  -%}
+                  <span class="qv-radio__swatch" style="--swatch: {{ swatch_color }};" aria-hidden="true"></span>
+                {%- endif -%}
+                <span class="qv-radio__text">{{ value | escape }}</span>
+              </label>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+{%- endunless -%}

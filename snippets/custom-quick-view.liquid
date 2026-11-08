@@ -1,0 +1,99 @@
+{% doc %}
+  Renders a product quick view inside a native <dialog>.
+  Variant data is embedded as JSON so the section script can resolve the selected variant.
+
+  @param {product} product - The product to show
+  @param {string} id - Unique id for the dialog (use block.id)
+
+  @example
+  {% render 'custom-quick-view', product: block.settings.product, id: block.id %}
+{% enddoc %}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign dialog_id = 'QuickView-' | append: id
+-%}
+
+<dialog
+  id="{{ dialog_id }}"
+  class="qv"
+  aria-labelledby="{{ dialog_id }}-title"
+  data-quick-view
+>
+  <button type="button" class="qv__close" aria-label="Close" data-qv-close>
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+      <path d="M1 1L11 11M11 1L1 11" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+  </button>
+
+  <div class="qv__head">
+    <div class="qv__media">
+      {%- if product.featured_image -%}
+        {{
+          product.featured_image
+          | image_url: width: 360
+          | image_tag: class: 'qv__img', loading: 'lazy', width: 120, height: 140, sizes: '120px'
+        }}
+      {%- else -%}
+        {{ 'product-apparel-1' | placeholder_svg_tag: 'qv__img' }}
+      {%- endif -%}
+    </div>
+    <div class="qv__info">
+      <h3 id="{{ dialog_id }}-title" class="qv__title">{{ product.title | escape }}</h3>
+      <p class="qv__price" data-qv-price>{{ current_variant.price | money }}</p>
+      {%- if product.description != blank -%}
+        <p class="qv__desc">{{ product.description | strip_html | truncate: 100 }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- form 'product', product, class: 'qv__form', data-qv-form: '', novalidate: 'novalidate' -%}
+    <input
+      type="hidden"
+      name="id"
+      value="{% if product.has_only_default_variant %}{{ current_variant.id }}{% endif %}"
+      data-qv-variant-id
+    >
+
+    {% render 'custom-product-options', product: product, id_prefix: id %}
+
+    <p class="qv__error" role="alert" data-qv-error hidden></p>
+
+    <button
+      type="submit"
+      class="qv__submit"
+      data-qv-submit
+      {% unless product.available %}
+        disabled
+      {% endunless %}
+    >
+      <span data-qv-submit-text>
+        {%- if product.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+      </span>
+      <svg
+        class="qv__submit-arrow"
+        width="34"
+        height="12"
+        viewBox="0 0 34 12"
+        fill="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M0 6H33M28 1L33 6L28 11" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </button>
+  {%- endform -%}
+
+  <script type="application/json" data-qv-variants>
+    [
+      {%- for variant in product.variants -%}
+        {
+          "id": {{ variant.id }},
+          "available": {{ variant.available | json }},
+          "options": {{ variant.options | json }},
+          "price": {{ variant.price | money | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  </script>
+</dialog>
