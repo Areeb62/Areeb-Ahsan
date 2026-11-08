@@ -1,130 +1,570 @@
+{%- comment -%}
+  Custom banner — built from scratch (no Dawn components, classes or snippets).
+  Figma: "Test for Candidates" → Desktop - 22 (1440px) / Home page:M (375px).
+  All selectors are scoped to #Banner-{{ section.id }} so theme CSS can't leak in.
+{%- endcomment -%}
+
+{%- liquid
+  assign bnr_font = section.settings.font
+  assign bnr_font_medium = bnr_font | font_modify: 'weight', '500'
+-%}
+
 {% style %}
+  {{ bnr_font | font_face: font_display: 'swap' }}
+  {%- if bnr_font_medium -%}
+    {{ bnr_font_medium | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  #Banner-{{ section.id }} {
+    --bnr-black: #000000;
+    --bnr-white: #ffffff;
+    --bnr-bar-bg: #F5F5F5;
+    --bnr-header-bg-mb: #F7F7F7;
+    --bnr-menu-bg-mb: #F2F2F2;
+    --bnr-yellow: #FFF544;
+
+    padding-top: {{ section.settings.spacing_top }}px;
+    padding-bottom: {{ section.settings.spacing_bottom }}px;
+    font-family: {{ bnr_font.family }}, {{ bnr_font.fallback_families }};
+    font-weight: 400;
+    color: var(--bnr-black);
+    letter-spacing: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #Banner-{{ section.id }} *,
+  #Banner-{{ section.id }} *::before,
+  #Banner-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #Banner-{{ section.id }} p,
+  #Banner-{{ section.id }} h2 {
+    margin: 0;
+    font-family: inherit;
+    letter-spacing: 0;
+    color: inherit;
+  }
+
+  /* ---------- Top bar (desktop) ---------- */
+  #Banner-{{ section.id }} .bnr-top {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 64px;
+    padding: 10px 50px;
+    background: var(--bnr-bar-bg);
+  }
+
+  #Banner-{{ section.id }} .bnr-top__logo {
+    display: block;
+    width: 151.44px;
+    line-height: 0;
+  }
+
+  #Banner-{{ section.id }} .bnr-top__logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  #Banner-{{ section.id }} .bnr-top__toggle {
+    display: none;
+  }
+
+  /* On desktop the menu wrapper disappears so its children sit in the bar's flex row */
+  #Banner-{{ section.id }} .bnr-top__menu {
+    display: contents;
+  }
+
+  #Banner-{{ section.id }} .bnr-top__announcement {
+    font-size: 16px;
+    line-height: 13.42px;
+    text-align: center;
+  }
+
+  /* ---------- Buttons (sizes from Figma) ---------- */
+  #Banner-{{ section.id }} .custom__button {
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20.48px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+  }
+
+  #Banner-{{ section.id }} .custom__button-arrow {
+    display: inline-flex;
+    line-height: 0;
+  }
+
+  #Banner-{{ section.id }} .custom__button-arrow svg {
+    display: block;
+    width: 24px;
+    height: auto;
+  }
+
+  #Banner-{{ section.id }} .custom__button-primary .custom__button-arrow path {
+    fill: var(--bnr-black);
+  }
+
+  #Banner-{{ section.id }} .bnr-top__button .custom__button {
+    justify-content: flex-start;
+    width: 207px;
+    height: 44px;
+    padding: 0 22px 0 41px;
+    gap: 18px;
+  }
+
+  #Banner-{{ section.id }} .bnr-content__button .custom__button {
+    justify-content: flex-start;
+    width: 220px;
+    height: 50px;
+    padding: 0 23px 0 55px;
+    gap: 29px;
+  }
+
+  #Banner-{{ section.id }} .bnr-content__button .custom__button-arrow svg {
+    width: 25.51px;
+  }
+
+  /* ---------- Media ---------- */
+  #Banner-{{ section.id }} .bnr-media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1440 / 780;
+    background: var(--bnr-white);
+  }
+
+  #Banner-{{ section.id }} .bnr-media__img,
+  #Banner-{{ section.id }} .bnr-media__placeholder {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  #Banner-{{ section.id }} .bnr-media__img--mobile {
+    display: none;
+  }
+
+  /* ---------- Content over media ---------- */
+  #Banner-{{ section.id }} .bnr-content {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 0 0 51px 67px;
+    pointer-events: none;
+  }
+
+  #Banner-{{ section.id }} .bnr-content > * {
+    pointer-events: auto;
+  }
+
+  #Banner-{{ section.id }} .bnr-content > * + * {
+    margin-top: 50px;
+  }
+
+  #Banner-{{ section.id }} .bnr-content__preheading {
+    font-size: 16px;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  #Banner-{{ section.id }} .bnr-content__heading {
+    font-size: 70px;
+    font-weight: 500;
+    line-height: 100%;
+  }
+
+  #Banner-{{ section.id }} .bnr-content__description {
+    max-width: 483px;
+    font-size: 20px;
+    line-height: 140%;
+  }
+
+  #Banner-{{ section.id }} .bnr-content__description p + p {
+    margin-top: 8px;
+  }
+
+  /* ---------- Caption bar ---------- */
+  #Banner-{{ section.id }} .bnr-caption {
+    min-height: 34px;
+    padding: 10px 50px;
+    background: var(--bnr-bar-bg);
+    font-size: 16px;
+    line-height: 13.42px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  #Banner-{{ section.id }} .bnr-caption p {
+    min-height: 14px;
+  }
+
+  /* =================== Mobile =================== */
+  @media screen and (max-width: 749px) {
     #Banner-{{ section.id }} {
-      padding-top: {{ section.settings.spacing_top }}px;
-      padding-bottom: {{ section.settings.spacing_bottom }}px;
+      padding-top: {{ section.settings.spacing_top_mb }}px;
+      padding-bottom: {{ section.settings.spacing_bottom_mb }}px;
     }
 
-    .banner-top-content {
+    /* Header */
+    #Banner-{{ section.id }} .bnr-top {
+      justify-content: center;
+      min-height: 65px;
+      padding: 23px 16px;
+      background: var(--bnr-header-bg-mb);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    #Banner-{{ section.id }} .bnr-top__toggle {
+      position: absolute;
+      top: 50%;
+      left: 16px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 16px 40px;
-  }
-
-  .banner-image {
-      position: relative;
-  }
-
-  .banner-content--wrapper {
-      position: absolute;
-      top:0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-        align-items: flex-end;
-        justify-content: flex-start;
-        padding: 40px;
-  }
-
-  .banner-bottom-content {
-    padding: 8px 40px;
-    text-align: center;
-}
-
-
-
-
-    @media screen and (max-width: 749px) {
-     #Banner-{{ section.id }} {
-          padding-top: {{ section.settings.spacing_top_mb }}px;
-          padding-bottom: {{ section.settings.spacing_bottom_mb }}px;
-      }
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      padding: 0;
+      background: none;
+      border: 0;
+      color: var(--bnr-black);
+      cursor: pointer;
+      transform: translateY(-50%);
+      -webkit-tap-highlight-color: transparent;
     }
+
+    #Banner-{{ section.id }} .bnr-top__toggle::after {
+      /* bigger tap target, invisible */
+      content: '';
+      position: absolute;
+      inset: -13px;
+    }
+
+    #Banner-{{ section.id }} .bnr-burger {
+      position: relative;
+      display: block;
+      width: 18px;
+      height: 10px;
+    }
+
+    #Banner-{{ section.id }} .bnr-burger span {
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 2px;
+      background: currentColor;
+      transition: transform 300ms ease-out, opacity 300ms ease-out, top 300ms ease-out;
+    }
+
+    #Banner-{{ section.id }} .bnr-burger span:nth-child(1) { top: 0; }
+    #Banner-{{ section.id }} .bnr-burger span:nth-child(2) { top: 4px; }
+    #Banner-{{ section.id }} .bnr-burger span:nth-child(3) { top: 8px; }
+
+    #Banner-{{ section.id }} .bnr-top.is-open .bnr-burger span:nth-child(1) {
+      top: 4px;
+      transform: rotate(45deg);
+    }
+
+    #Banner-{{ section.id }} .bnr-top.is-open .bnr-burger span:nth-child(2) {
+      opacity: 0;
+    }
+
+    #Banner-{{ section.id }} .bnr-top.is-open .bnr-burger span:nth-child(3) {
+      top: 4px;
+      transform: rotate(-45deg);
+    }
+
+    /* Dropdown menu */
+    #Banner-{{ section.id }} .bnr-top__menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 25px 16px;
+      background: var(--bnr-menu-bg-mb);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: opacity 300ms ease-out, transform 300ms ease-out, visibility 0s linear 300ms;
+    }
+
+    #Banner-{{ section.id }} .bnr-top.is-open .bnr-top__menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition: opacity 300ms ease-out, transform 300ms ease-out, visibility 0s;
+    }
+
+    #Banner-{{ section.id }} .bnr-top__button {
+      width: 100%;
+      max-width: 244px;
+    }
+
+    #Banner-{{ section.id }} .bnr-top__button .custom__button {
+      width: 100%;
+      padding: 0 22px 0 58px;
+    }
+
+    /* Media + content */
+    #Banner-{{ section.id }} .bnr-media {
+      aspect-ratio: auto;
+      height: 421px;
+    }
+
+    #Banner-{{ section.id }} .bnr-media__img,
+    #Banner-{{ section.id }} .bnr-media__placeholder {
+      top: 160px;
+      height: auto;
+      bottom: 0;
+      object-position: center top;
+    }
+
+    #Banner-{{ section.id }} .bnr-media__img--desktop.has-mobile {
+      display: none;
+    }
+
+    #Banner-{{ section.id }} .bnr-media__img--mobile {
+      display: block;
+    }
+
+    #Banner-{{ section.id }} .bnr-content {
+      justify-content: flex-start;
+      align-items: center;
+      padding: 49px 16px 39px;
+      text-align: center;
+    }
+
+    #Banner-{{ section.id }} .bnr-content > * + * {
+      margin-top: 24px;
+    }
+
+    #Banner-{{ section.id }} .bnr-content__heading {
+      font-size: 30px;
+    }
+
+    #Banner-{{ section.id }} .bnr-content__description {
+      max-width: 340px;
+      font-size: 16px;
+      line-height: 130%;
+    }
+
+    #Banner-{{ section.id }} .bnr-content > .bnr-content__button {
+      margin-top: auto;
+    }
+
+    #Banner-{{ section.id }} .bnr-content__button .custom__button {
+      width: 193px;
+      height: 45px;
+      padding: 13px 20px;
+      gap: 10px;
+      color: #F5F5F5;
+    }
+
+    #Banner-{{ section.id }} .bnr-content__button .custom__button-arrow svg {
+      width: 24px;
+    }
+
+    /* Caption */
+    #Banner-{{ section.id }} .bnr-caption {
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+  }
 {% endstyle %}
 
-{% liquid
-  assign top_content = false
-  if section.settings.logo != blank or section.settings.announcement != blank or section.settings.button_text != blank
+{%- liquid
+  assign has_menu = false
+  if section.settings.announcement != blank or section.settings.button_text != blank
+    assign has_menu = true
+  endif
+
+  assign top_content = has_menu
+  if section.settings.logo != blank
     assign top_content = true
   endif
-%}
 
-<div id="Banner-{{ section.id }}" class="banner-container">
-  {% if top_content %}
-    <div class="banner-top-content">
-      {% if section.settings.logo != blank %}
-        <div class="banner-top--logo">
-          {{ section.settings.logo | image_url: width: 150 | image_tag }}
-        </div>
-      {% endif %}
-      {% if section.settings.announcement != blank %}
-        <div class="banner-top--announcement">
-          <p>
-            {{ section.settings.announcement }}
-          </p>
-        </div>
-      {% endif %}
-      {% if section.settings.button_text != blank %}
-        <div class="banner-top--button">
-          {% render 'custom-button',
-            url: section.settings.button_url,
-            button_text: section.settings.button_text,
-            styletype: section.settings.button_style
-          %}
-        </div>
-      {% endif %}
-    </div>
-  {% endif %}
+  assign has_mobile_image = false
+  assign desktop_img_class = 'bnr-media__img bnr-media__img--desktop'
+  if section.settings.image_mobile != blank
+    assign has_mobile_image = true
+    assign desktop_img_class = desktop_img_class | append: ' has-mobile'
+  endif
+-%}
 
-  <div class="banner-image">
-    {% if section.settings.image != blank %}
-      {{ section.settings.image | image_url: width: 4100 | image_tag }}
-    {% else %}
-      {{ 'lifestyle-2' | placeholder_svg_tag }}
-    {% endif %}
-    {% if section.blocks.size > 0 %}
-      <div class="banner-content--wrapper">
-        <article class="banner-content">
-          {% for block in section.blocks %}
-            <div id="block-{{ block.id }}" class="block--{{ block.type }}">
-              {% case block.type %}
-                {% when 'preheading' %}
-                  <p class="preheading" {{ block.shopify_attributes }}>{{ block.settings.preheading }}</p>
-                {% when 'heading' %}
-                  <h2 class="heading" {{ block.shopify_attributes }}>
-                    {{ block.settings.heading }}
-                  </h2>
+<div id="Banner-{{ section.id }}" class="bnr">
+  {%- if top_content -%}
+    <bnr-top-bar class="bnr-top">
+      {%- if has_menu -%}
+        <button
+          type="button"
+          class="bnr-top__toggle"
+          aria-expanded="false"
+          aria-controls="BannerMenu-{{ section.id }}"
+          aria-label="Open menu"
+        >
+          <span class="bnr-burger" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      {%- endif -%}
 
-                {% when 'description' %}
-                  <div id="block--{{ block.type }}" class="description" {{ block.shopify_attributes }}>
-                    {{ block.settings.description }}
-                  </div>
+      {%- if section.settings.logo != blank -%}
+        <a href="{{ routes.root_url }}" class="bnr-top__logo">
+          {{
+            section.settings.logo
+            | image_url: width: 304
+            | image_tag: alt: section.settings.logo.alt, loading: 'eager', width: 152
+          }}
+        </a>
+      {%- endif -%}
 
-                {% when 'button' %}
-                  <div id="block--{{ block.type }}" class="banner-button" {{ block.shopify_attributes }}>
-                    {% render 'custom-button',
-                      url: block.settings.button_url,
-                      button_text: block.settings.button_text,
-                      styletype: block.settings.button_style
-                    %}
-                  </div>
-              {% endcase %}
+      {%- if has_menu -%}
+        <div id="BannerMenu-{{ section.id }}" class="bnr-top__menu">
+          {%- if section.settings.announcement != blank -%}
+            <p class="bnr-top__announcement">{{ section.settings.announcement }}</p>
+          {%- endif -%}
+          {%- if section.settings.button_text != blank -%}
+            <div class="bnr-top__button">
+              {% render 'custom-button',
+                url: section.settings.button_url,
+                button_text: section.settings.button_text,
+                styletype: section.settings.button_style
+              %}
             </div>
-          {% endfor %}
-        </article>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </bnr-top-bar>
+  {%- endif -%}
+
+  <div class="bnr-media">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 3840
+        | image_tag:
+          class: desktop_img_class,
+          sizes: '100vw',
+          widths: '750, 1100, 1440, 1920, 2880, 3840',
+          loading: 'eager',
+          fetchpriority: 'high'
+      }}
+    {%- elsif has_mobile_image == false -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'bnr-media__placeholder' }}
+    {%- endif -%}
+
+    {%- if has_mobile_image -%}
+      {{
+        section.settings.image_mobile
+        | image_url: width: 1500
+        | image_tag:
+          class: 'bnr-media__img bnr-media__img--mobile',
+          sizes: '100vw',
+          widths: '375, 750, 1100, 1500',
+          loading: 'eager'
+      }}
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="bnr-content">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'preheading' -%}
+              <p class="bnr-content__preheading" {{ block.shopify_attributes }}>
+                {{- block.settings.preheading -}}
+              </p>
+            {%- when 'heading' -%}
+              <h2 class="bnr-content__heading" {{ block.shopify_attributes }}>
+                {{- block.settings.heading -}}
+              </h2>
+            {%- when 'description' -%}
+              <div class="bnr-content__description" {{ block.shopify_attributes }}>
+                {{- block.settings.description -}}
+              </div>
+            {%- when 'button' -%}
+              <div class="bnr-content__button" {{ block.shopify_attributes }}>
+                {% render 'custom-button',
+                  url: block.settings.button_url,
+                  button_text: block.settings.button_text,
+                  styletype: block.settings.button_style
+                %}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
       </div>
-    {% endif %}
+    {%- endif -%}
   </div>
 
-  {% if section.settings.media_caption != blank %}
-    <div class="banner-bottom-content">
-      <p>
-        {{ section.settings.media_caption }}
-      </p>
+  {%- if section.settings.media_caption != blank -%}
+    <div class="bnr-caption">
+      <p>{{ section.settings.media_caption }}</p>
     </div>
-  {% endif %}
+  {%- endif -%}
 </div>
+
+<script>
+  if (!customElements.get('bnr-top-bar')) {
+    customElements.define(
+      'bnr-top-bar',
+      class BannerTopBar extends HTMLElement {
+        connectedCallback() {
+          this.toggle = this.querySelector('.bnr-top__toggle');
+          if (!this.toggle) return;
+
+          this.onToggle = () => this.setOpen(!this.classList.contains('is-open'));
+          this.onKeyup = (e) => {
+            if (e.key === 'Escape' && this.classList.contains('is-open')) {
+              this.setOpen(false);
+              this.toggle.focus();
+            }
+          };
+          this.onDocClick = (e) => {
+            if (this.classList.contains('is-open') && !this.contains(e.target)) this.setOpen(false);
+          };
+          this.mq = window.matchMedia('(min-width: 750px)');
+          this.onMq = () => this.mq.matches && this.setOpen(false);
+
+          this.toggle.addEventListener('click', this.onToggle);
+          document.addEventListener('keyup', this.onKeyup);
+          document.addEventListener('click', this.onDocClick);
+          this.mq.addEventListener('change', this.onMq);
+        }
+
+        disconnectedCallback() {
+          if (!this.toggle) return;
+          this.toggle.removeEventListener('click', this.onToggle);
+          document.removeEventListener('keyup', this.onKeyup);
+          document.removeEventListener('click', this.onDocClick);
+          this.mq.removeEventListener('change', this.onMq);
+        }
+
+        setOpen(open) {
+          this.classList.toggle('is-open', open);
+          this.toggle.setAttribute('aria-expanded', open);
+          this.toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        }
+      }
+    );
+  }
+</script>
 
 {% schema %}
 {
@@ -207,6 +647,16 @@
   ],
   "settings": [
     {
+      "type": "font_picker",
+      "id": "font",
+      "label": "Font",
+      "default": "jost_n4"
+    },
+    {
+      "type": "header",
+      "content": "Top bar"
+    },
+    {
       "type": "image_picker",
       "id": "logo",
       "label": "Logo"
@@ -244,6 +694,22 @@
       ]
     },
     {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Recommended 2880 × 1560px"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image",
+      "info": "Optional. Shown below the text on mobile. Recommended 750 × 520px"
+    },
+    {
       "type": "inline_richtext",
       "id": "media_caption",
       "label": "Media caption",
@@ -251,28 +717,19 @@
     },
     {
       "type": "header",
-      "content": "Media"
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Image"
-    },
-    {
-      "type": "header",
-      "content": "Deskop spacing"
+      "content": "Desktop spacing"
     },
     {
       "type": "number",
       "id": "spacing_top",
       "label": "Spacing top (px)",
-      "default": 50
+      "default": 0
     },
     {
       "type": "number",
       "id": "spacing_bottom",
       "label": "Spacing bottom (px)",
-      "default": 50
+      "default": 0
     },
     {
       "type": "header",
@@ -282,13 +739,13 @@
       "type": "number",
       "id": "spacing_top_mb",
       "label": "Spacing top (px)",
-      "default": 30
+      "default": 0
     },
     {
       "type": "number",
       "id": "spacing_bottom_mb",
       "label": "Spacing bottom (px)",
-      "default": 30
+      "default": 0
     }
   ],
   "presets": [
