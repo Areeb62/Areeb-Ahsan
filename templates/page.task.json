@@ -48,6 +48,7 @@
       ],
       "name": "Banner",
       "settings": {
+        "font": "jost_n4",
         "logo": "shopify://shop_images/Group_1000007777.svg",
         "announcement": "Find the ideal gift for your loved ones.",
         "button_url": "#",
@@ -59,10 +60,84 @@
         "spacing_top_mb": 0,
         "spacing_bottom_mb": 0
       }
+    },
+    "custom_product_grid_nVCkxJ": {
+      "type": "custom__product-grid",
+      "blocks": {
+        "product_DxE6nW": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "position_x": 62,
+            "position_y": 56
+          }
+        },
+        "product_3iWHdB": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "position_x": 62,
+            "position_y": 56
+          }
+        },
+        "product_KXDTpy": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "position_x": 62,
+            "position_y": 56
+          }
+        },
+        "product_HHhYij": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "position_x": 62,
+            "position_y": 56
+          }
+        },
+        "product_HHy6m7": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "position_x": 62,
+            "position_y": 56
+          }
+        },
+        "product_JT4eaG": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "position_x": 62,
+            "position_y": 56
+          }
+        }
+      },
+      "block_order": [
+        "product_DxE6nW",
+        "product_3iWHdB",
+        "product_KXDTpy",
+        "product_HHhYij",
+        "product_HHy6m7",
+        "product_JT4eaG"
+      ],
+      "name": "Product grid with hotspots",
+      "settings": {
+        "heading": "Tisso vison in the wild",
+        "button_text": "",
+        "button_url": "",
+        "button_style": "secondary",
+        "body_font": "jost_n4",
+        "spacing_top": 90,
+        "spacing_bottom": 90,
+        "spacing_top_mb": 40,
+        "spacing_bottom_mb": 40
+      }
     }
   },
   "order": [
     "main",
-    "custom_banner_ciLwFq"
+    "custom_banner_ciLwFq",
+    "custom_product_grid_nVCkxJ"
   ]
 }
