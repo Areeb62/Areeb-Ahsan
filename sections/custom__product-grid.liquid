@@ -575,7 +575,7 @@
                 alt: product.title
             }}
           {%- else -%}
-            {%- assign placeholder_index = forloop.index0 | modulo: 6 | plus: 1 -%}
+            {%- assign placeholder_index = forloop.index0 | modulo: 4 | plus: 1 -%}
             {{ 'product-apparel-' | append: placeholder_index | placeholder_svg_tag: 'pg-card__img' }}
           {%- endif -%}
 
