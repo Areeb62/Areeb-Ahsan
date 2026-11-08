@@ -60,10 +60,84 @@
         "spacing_top_mb": 0,
         "spacing_bottom_mb": 0
       }
+    },
+    "custom_product_grid_H6ABYH": {
+      "type": "custom__product-grid",
+      "blocks": {
+        "product_GtYrjq": {
+          "type": "product",
+          "settings": {
+            "product": "black-leather-bag",
+            "position_x": 62,
+            "position_y": 56
+          }
+        },
+        "product_9atPPx": {
+          "type": "product",
+          "settings": {
+            "product": "blue-silk-tuxedo",
+            "position_x": 62,
+            "position_y": 56
+          }
+        },
+        "product_Ue83Cc": {
+          "type": "product",
+          "settings": {
+            "product": "chequered-red-shirt",
+            "position_x": 62,
+            "position_y": 56
+          }
+        },
+        "product_W8iqd8": {
+          "type": "product",
+          "settings": {
+            "product": "classic-leather-jacket",
+            "position_x": 62,
+            "position_y": 56
+          }
+        },
+        "product_tmGWd8": {
+          "type": "product",
+          "settings": {
+            "product": "classic-varsity-top",
+            "position_x": 62,
+            "position_y": 56
+          }
+        },
+        "product_ehi8gw": {
+          "type": "product",
+          "settings": {
+            "product": "dark-denim-top",
+            "position_x": 62,
+            "position_y": 56
+          }
+        }
+      },
+      "block_order": [
+        "product_GtYrjq",
+        "product_9atPPx",
+        "product_Ue83Cc",
+        "product_W8iqd8",
+        "product_tmGWd8",
+        "product_ehi8gw"
+      ],
+      "name": "Product grid with hotspots",
+      "settings": {
+        "heading": "Tisso vison in the wild",
+        "button_text": "",
+        "button_url": "",
+        "button_style": "secondary",
+        "body_font": "jost_n4",
+        "spacing_top": 90,
+        "spacing_bottom": 90,
+        "spacing_top_mb": 40,
+        "spacing_bottom_mb": 40
+      }
     }
   },
   "order": [
     "main",
-    "custom_banner_ciLwFq"
+    "custom_banner_ciLwFq",
+    "custom_product_grid_H6ABYH"
   ]
 }
